@@ -46,6 +46,7 @@ class Sql extends PDO {
     //1º                  query bruta  , nenhum parametro ainda
     public function select($rawQuery, $params = array()):array
     {   
+       
         $stmt = $this->executeQuery($rawQuery, $params);
         
 
