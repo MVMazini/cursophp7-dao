@@ -51,6 +51,14 @@ public function __toString(){
 	));
 }
 
+public function setData($data){
+
+	$this->setIdusuario($data['idusuario']);
+  $this->setLogin($data['login']);
+	$this->setSenha($data['senha']);
+	$this->setDtcadastro( new DateTime($data['dtcadastro']));
+}
+
 public function loadById($id){
 	$sql = new Sql();
 	$results = $sql->select("SELECT * FROM usuario where idusuario = :ID ", array(
@@ -59,15 +67,9 @@ public function loadById($id){
 
 	if(count($results)>0){
 
-       $row  = $results[0];
-
-       $this->setIdusuario($row['idusuario']);
-       $this->setLogin($row['login']);
-       $this->setSenha($row['senha']);
-       $this->setDtcadastro( new DateTime($row['dtcadastro']));
+        $this->setData($results[0]);
 	}
 }
-
 
 public static function  getList(){
 
@@ -96,12 +98,7 @@ $sql = new Sql();
 
 	if(count($results)>0){
 
-       $row  = $results[0];
-
-       $this->setIdusuario($row['idusuario']);
-       $this->setLogin($row['login']);
-       $this->setSenha($row['senha']);
-       $this->setDtcadastro( new DateTime($row['dtcadastro']));
+     $this->setData($results[0]);       
 	}
 	else {
 		throw new Exception("Login ou senha invalidos");
@@ -109,6 +106,47 @@ $sql = new Sql();
 	}
 
 }
+//insert recuperando o usuario inserido
+// public function insert(){
+//   $sql = new Sql();
+// 	$results = $sql->select("CALL sp_usuario_insert(:login, :senha)",array(
+// 			':login'=>$this->getLogin(),
+// 			':senha'=>$this->getSenha()
+// 	));
+
+// 	if (count($results)>0){
+// 		$this->setData($results[0]);
+// 	}	
+//}
+
+public function insert($login, $senha){
+	$this->setLogin($login);
+  $this->setSenha($senha);
+
+	$sql = new Sql();
+
+	$sql->executeQuery("INSERT INTO usuario(login, senha)VALUES(:login,:senha)",array(
+
+		':login'=>$login,
+		':senha'=>$senha
+	));
+}
+
+public function update($login,$senha){
+  $this->setLogin($login);
+  $this->setSenha($senha);
+
+	$sql = new SQL();
+
+	$sql->executeQuery("UPDATE usuario set login = :login, senha = :senha where idusuario = :id",array(
+			':login'=>$this->getLogin($login),
+			':senha'=>$this->getSenha($senha),
+			':id'=>$this->getIdusuario()
+
+	));
+}
+
+
 
 }
 

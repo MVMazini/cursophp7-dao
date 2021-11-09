@@ -9,15 +9,12 @@ class Sql extends PDO {
         $this->conn = new PDO("mysql:host=localhost;dbname=db_teste", "root", "");
 
     }
-    //3º           recebo o estado da minha query  e os paramentro
+   // 3º           recebo o estado da minha query  e os paramentro
     private function setParams($statment, $parameters = array()) {
-
         //  para cada paramentro eu tenho um chave e valor
         foreach ($parameters as $key => $value) {
-
               //cada parametro eu passo a chave e o valor
-            $this->setParam($statment, $key, $value);
-             
+            $this->setParam($statment, $key, $value);    
         }
 
 
@@ -34,19 +31,18 @@ class Sql extends PDO {
                 //preparo minha query 
         $stmt = $this->conn->prepare($rawQuery);
                //passo o estado da minha e os parametros para o 2º
-        $this->setParams($stmt, $params);
+         $this->setParams($stmt, $params);
     
-        $stmt->execute();
-       
-   
+
+        $stmt->execute(); 
        
         return $stmt;
-
     }
     //1º                  query bruta  , nenhum parametro ainda
     public function select($rawQuery, $params = array()):array
     {   
-       
+       // var_dump($rawQuery,$params);
+       // exit;
         $stmt = $this->executeQuery($rawQuery, $params);
         
 
