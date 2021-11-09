@@ -146,6 +146,20 @@ public function update($login,$senha){
 	));
 }
 
+public function delete(){
+
+	$sql = new Sql();
+
+	$sql->executeQuery("DELETE FROM usuario where idusuario = :id",array(
+
+		':id'=>$this->getIdusuario()
+	));
+
+	$this->setIdusuario(0);
+	$this->setLogin("");
+	$this->setSenha("");
+	$this->setDtcadastro(new DateTime());
+}
 
 
 }

@@ -29,12 +29,19 @@ require_once("config.php");
 // echo $novo;
 
 //insert
-$usuario = new Usuario();
-$usuario->insert("beatriz@beatriz","666");
+// $usuario = new Usuario();
+// $usuario->insert("beatriz@beatriz","666");
 
 //update usuario
 // $usuario = new Usuario();
 // $usuario->loadById(3);
 // $usuario->update("ciro@ciro","7777");
 // echo $usuario;
+
+//deletar usuario
+
+$usuario = new Usuario();
+$usuario->loadById(5);
+$usuario->delete();
+echo $usuario;
  ?>
